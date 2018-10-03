@@ -39,14 +39,19 @@ namespace Callisto
 
             app.UseWebSockets(webSocketOptions);
 
+            Console.WriteLine("init socket handler");
+
             app.Use(async (context, next) =>
             {
                 if (context.Request.Path == "/ws")
                 {
                     if (context.WebSockets.IsWebSocketRequest)
                     {
+                        Console.WriteLine("someone connected");
+
                         WebSocket webSocket = await context.WebSockets.AcceptWebSocketAsync();
-                        await Echo(context, webSocket);
+                        Callisto.Instance().SocketManger.Listen(webSocket);
+                        //await Echo(context, webSocket);
                     }
                     else
                     {
