@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Callisto.Receiver.MapReceiver;
 
 namespace Callisto
 {
@@ -22,6 +23,14 @@ namespace Callisto
         }
         #endregion
 
-        public SocketGateway SocketManager { get; set; } = new SocketGateway();
+        public SocketGateway SocketGateway { get; set; } = new SocketGateway();
+
+        private MapReceiver _mapReceiver;
+
+
+        public void Init()
+        {
+            _mapReceiver = new MapReceiver(SocketGateway.SocketManager);
+        }
     }
 }

@@ -13,11 +13,11 @@ namespace Callisto
     public class SocketGateway
     {
         private readonly ConcurrentDictionary<Guid, WebSocket> _webSockets = new ConcurrentDictionary<Guid, WebSocket>();
-        private SocketManager _socketManager;
+        public SocketManager SocketManager { get; }
 
         public SocketGateway()
         {
-            _socketManager = new SocketManager(this);
+            SocketManager = new SocketManager(this);
         }
 
         public async Task Listen(HttpContext context, WebSocket webSocket)
@@ -25,7 +25,7 @@ namespace Callisto
             var socketGuid = Guid.NewGuid();
             context.Items.Add("id", socketGuid);
             _webSockets[socketGuid] = webSocket;
-            _socketManager.RegisterSocket(socketGuid);
+            SocketManager.RegisterSocket(socketGuid);
             var buffer = new byte[1024 * 4];
             var result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
             while (!result.CloseStatus.HasValue)
@@ -41,7 +41,7 @@ namespace Callisto
         private void ProcessMessage(Guid guid, byte[] buffer, WebSocketReceiveResult result)
         {
             var str = Encoding.Default.GetString(buffer).Substring(0, result.Count);
-            _socketManager.ProcessMessage(guid, str);
+            SocketManager.ProcessMessage(guid, str);
         }
 
         public async void SendMessage(Guid guid, string message)
