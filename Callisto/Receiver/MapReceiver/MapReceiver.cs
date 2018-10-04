@@ -9,11 +9,8 @@ namespace Callisto.Receiver.MapReceiver
     {
         public MapReceiver(SocketManager socketManager)
         {
-            socketManager.On(MapReceiverAlias.LOAD_MAP, );
+            socketManager.On(MapReceiverAlias.LOAD_MAP, MapReceiverFactory.Make(MapReceiverAlias.LOAD_MAP).Listen);
         }
-
-
-
 
     }
 }

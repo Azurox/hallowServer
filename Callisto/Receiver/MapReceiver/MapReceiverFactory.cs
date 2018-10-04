@@ -3,23 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Callisto.Receiver.Common;
+using Callisto.Receiver.MapReceiver.LoadMap;
 
 namespace Callisto.Receiver.MapReceiver
 {
     public class MapReceiverFactory
     {
-        public IReceiver Make(string eventName)
+        private MapReceiverFactory() { }
+        
+        public static IReceiver Make(string eventName)
         {
             switch (eventName)
             {
                 case MapReceiverAlias.LOAD_MAP:
-                    // Insert the factory
-                    break;
+                    return new LoadMapReceiver();
                 default:
                     return null;
             }
-
-            return null;
         }
 
     }

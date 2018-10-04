@@ -7,6 +7,7 @@ namespace Callisto.Receiver.MapReceiver
 {
     public class MapReceiverAlias
     {
+        private MapReceiverAlias() { }
         public const string LOAD_MAP = "map/loadMap";
     }
 }

@@ -7,6 +7,6 @@ namespace Callisto.Receiver.Common
 {
     public interface IReceiver
     {
-        void Invoke();
+        void Listen(Socket socket, string data);
     }
 }

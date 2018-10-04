@@ -7,6 +7,7 @@ namespace Callisto
     public class SocketManager
     {
         private readonly Dictionary<string, List<Action<Socket, string>>> _registeredActions = new Dictionary<string, List<Action<Socket, string>>>();
+
         private readonly ConcurrentDictionary<Guid, Socket> _sockets = new ConcurrentDictionary<Guid, Socket>();
         private readonly SocketGateway _socketGateway;
 
