@@ -47,11 +47,8 @@ namespace Callisto
                 {
                     if (context.WebSockets.IsWebSocketRequest)
                     {
-                        Console.WriteLine("someone connected");
-
-                        WebSocket webSocket = await context.WebSockets.AcceptWebSocketAsync();
-                        Callisto.Instance().SocketManger.Listen(webSocket);
-                        //await Echo(context, webSocket);
+                        var webSocket = await context.WebSockets.AcceptWebSocketAsync();
+                        await Callisto.Instance().SocketManager.Listen(context, webSocket);
                     }
                     else
                     {
@@ -66,17 +63,5 @@ namespace Callisto
             });
         }
 
-        private async Task Echo(HttpContext context, WebSocket webSocket)
-        {
-            var buffer = new byte[1024 * 4];
-            WebSocketReceiveResult result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-            while (!result.CloseStatus.HasValue)
-            {
-                await webSocket.SendAsync(new ArraySegment<byte>(buffer, 0, result.Count), result.MessageType, result.EndOfMessage, CancellationToken.None);
-
-                result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-            }
-            await webSocket.CloseAsync(result.CloseStatus.Value, result.CloseStatusDescription, CancellationToken.None);
-        }
     }
 }

@@ -22,6 +22,6 @@ namespace Callisto
         }
         #endregion
 
-        public SocketManager SocketManger { get; set; } = new SocketManager();
+        public SocketGateway SocketManager { get; set; } = new SocketGateway();
     }
 }
