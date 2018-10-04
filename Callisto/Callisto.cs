@@ -23,14 +23,17 @@ namespace Callisto
         }
         #endregion
 
-        public SocketGateway SocketGateway { get; set; } = new SocketGateway();
+        public SocketGateway SocketGateway { get; } = new SocketGateway();
+
+        public IServiceProvider ServiceProvider { get; set; }
 
         private MapReceiver _mapReceiver;
-
+        private AccountReceiver _accountReceiver;
 
         public void Init()
         {
             _mapReceiver = new MapReceiver(SocketGateway.SocketManager);
+            _accountReceiver = new AccountReceiver(SocketGateway.SocketManager);
         }
     }
 }

@@ -5,6 +5,8 @@ using System.Net.WebSockets;
 using System.Security.Cryptography.Xml;
 using System.Threading;
 using System.Threading.Tasks;
+using Callisto.Database;
+using Callisto.Database.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -25,7 +27,17 @@ namespace Callisto
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<DatabaseSettings>(options =>
+            {
+                options.ConnectionString = Configuration.GetSection("MongoDb:ConnectionString").Value;
+                options.Database = Configuration.GetSection("MongoDb:Database").Value;
+            });
 
+            services.AddTransient<IDatabaseContext, DatabaseContext>();
+            services.AddTransient<IAccountRepository, AccountRepository>();
+
+            Callisto.Instance().ServiceProvider = services.BuildServiceProvider();
+            Callisto.Instance().Init();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,7 +60,7 @@ namespace Callisto
                     if (context.WebSockets.IsWebSocketRequest)
                     {
                         var webSocket = await context.WebSockets.AcceptWebSocketAsync();
-                        await Callisto.Instance().SocketManager.Listen(context, webSocket);
+                        await Callisto.Instance().SocketGateway.Listen(context, webSocket);
                     }
                     else
                     {
