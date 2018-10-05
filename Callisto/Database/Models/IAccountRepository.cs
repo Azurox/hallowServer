@@ -6,8 +6,9 @@ namespace Callisto.Database.Models
 {
     public interface IAccountRepository
     {
-        Task<Account> GetAccount(string email);
+        Task<Account> GetAccount(string email, string password);
         Task Create(Account account);
+        Task<bool> AccountExist(string email);
         Task<bool> Update(Account account);
         Task<bool> Delete(string email);
     }

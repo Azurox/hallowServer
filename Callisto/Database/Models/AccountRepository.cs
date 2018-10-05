@@ -12,14 +12,24 @@ namespace Callisto.Database.Models
         {
             _context = context;
         }
-        public Task<Account> GetAccount(string email)
+        public Task<Account> GetAccount(string email, string password)
         {
-            FilterDefinition<Account> filter = Builders<Account>.Filter.Eq(m => m.Email, email);
+            FilterDefinition<Account> filter = Builders<Account>.Filter.Eq(m => m.Email, email) & Builders<Account>.Filter.Eq(m => m.Password, password);
             return _context
                     .Accounts
                     .Find(filter)
                     .FirstOrDefaultAsync();
         }
+
+        public async Task<bool> AccountExist(string email)
+        {
+            FilterDefinition<Account> filter = Builders<Account>.Filter.Eq(m => m.Email, email);
+            return await _context
+                .Accounts
+                .Find(filter)
+                .FirstOrDefaultAsync() != null;
+        }
+
         public async Task Create(Account account)
         {
             await _context.Accounts.InsertOneAsync(account);

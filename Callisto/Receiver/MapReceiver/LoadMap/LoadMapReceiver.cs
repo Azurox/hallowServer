@@ -8,8 +8,9 @@ namespace Callisto.Receiver.MapReceiver.LoadMap
 {
     public class LoadMapReceiver: IReceiver
     {
-        public void Listen(Socket socket, string data)
+        public Task Listen(Socket socket, string data)
         {
+            throw new NotImplementedException();
         }
     }
 }

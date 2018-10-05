@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Callisto.Receiver.Account.Connect;
 using Callisto.Receiver.AccountReceiver.Register;
 using Callisto.Receiver.Common;
 using Callisto.Receiver.MapReceiver.LoadMap;
@@ -17,9 +18,9 @@ namespace Callisto.Receiver.MapReceiver
             switch (eventName)
             {
                 case AccountReceiverAlias.REGISTER:
-                return ActivatorUtilities.CreateInstance<RegisterReceiver>(Callisto.Instance().ServiceProvider);
+                    return ActivatorUtilities.CreateInstance<RegisterReceiver>(Callisto.Instance().ServiceProvider);
                 case AccountReceiverAlias.CONNECT:
-                    //return new ConnectReceiver();
+                    return ActivatorUtilities.CreateInstance<ConnectReceiver>(Callisto.Instance().ServiceProvider);
                 case AccountReceiverAlias.CREATE_CHARACTER:
                     //return new CreateCharacterReceiver();
                 case AccountReceiverAlias.SELECT_CHARACTER:

@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Callisto
 {
     public class SocketManager
     {
-        private readonly Dictionary<string, List<Action<Socket, string>>> _registeredActions = new Dictionary<string, List<Action<Socket, string>>>();
+        private readonly Dictionary<string, List<Func<Socket, string, Task>>>  _registeredActions = new Dictionary<string, List<Func<Socket, string, Task>>>();
 
         private readonly ConcurrentDictionary<Guid, Socket> _sockets = new ConcurrentDictionary<Guid, Socket>();
         private readonly SocketGateway _socketGateway;
@@ -21,11 +22,11 @@ namespace Callisto
             _sockets.TryAdd(guid, new Socket(guid));
         }
 
-        public void On(string eventName, Action<Socket, string> callback)
+        public void On(string eventName, Func<Socket, string, Task> callback)
         {
             if (!_registeredActions.ContainsKey(eventName))
             {
-                _registeredActions[eventName] = new List<Action<Socket, string>>();
+                _registeredActions[eventName] = new List<Func<Socket, string, Task>>();
             }
             _registeredActions[eventName].Add(callback);
         }
