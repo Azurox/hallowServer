@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Callisto.Database;
 using Callisto.Database.Models;
+using Callisto.Database.Models.AccountModel;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;

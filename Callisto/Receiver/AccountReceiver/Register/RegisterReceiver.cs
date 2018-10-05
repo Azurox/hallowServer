@@ -1,10 +1,9 @@
 ﻿using Callisto.Database.Models;
+using Callisto.Database.Models.AccountModel;
 using Callisto.Receiver.Common;
 using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
-using Callisto.Database.Models;
-
 
 namespace Callisto.Receiver.AccountReceiver.Register
 {
@@ -27,7 +26,7 @@ namespace Callisto.Receiver.AccountReceiver.Register
             var request = JsonConvert.DeserializeObject<Request>(data);
             if (await _accountRepository.AccountExist(request.Email))
             {
-                await _accountRepository.Create(new Database.Models.Account{Email = request.Email, Password = request.Password});
+                await _accountRepository.Create(new Account(){ Email = request.Email, Password = request.Password});
             }
             else
             {

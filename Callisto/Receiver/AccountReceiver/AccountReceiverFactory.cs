@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Callisto.Receiver.Account.Connect;
+using Callisto.Receiver.AccountReceiver.Connect;
 using Callisto.Receiver.AccountReceiver.Register;
 using Callisto.Receiver.Common;
 using Callisto.Receiver.MapReceiver.LoadMap;
 using Microsoft.Extensions.DependencyInjection;
-namespace Callisto.Receiver.MapReceiver
+namespace Callisto.Receiver.AccountReceiver
 {
     public class AccountReceiverFactory
     {

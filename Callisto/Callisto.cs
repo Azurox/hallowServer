@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Callisto.Receiver.AccountReceiver;
 using Callisto.Receiver.MapReceiver;
+using Callisto.SocketManagement;
 
 namespace Callisto
 {
@@ -27,6 +29,8 @@ namespace Callisto
 
         public IServiceProvider ServiceProvider { get; set; }
 
+        public Io Io { get; protected set; }
+
         private MapReceiver _mapReceiver;
         private AccountReceiver _accountReceiver;
 
@@ -34,6 +38,7 @@ namespace Callisto
         {
             _mapReceiver = new MapReceiver(SocketGateway.SocketManager);
             _accountReceiver = new AccountReceiver(SocketGateway.SocketManager);
+            Io = new Io(SocketGateway);
         }
     }
 }

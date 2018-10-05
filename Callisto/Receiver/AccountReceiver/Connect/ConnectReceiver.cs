@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Callisto.Database.Models;
+using Callisto.Database.Models.AccountModel;
 using Callisto.Receiver.Common;
 using Newtonsoft.Json;
 
-namespace Callisto.Receiver.Account.Connect
+namespace Callisto.Receiver.AccountReceiver.Connect
 {
     public class ConnectReceiver : IReceiver
     {
@@ -28,7 +29,14 @@ namespace Callisto.Receiver.Account.Connect
         {
             var request = JsonConvert.DeserializeObject<Request>(data);
             var account = await _accountRepository.GetAccount(request.Email, request.Password);
-            Console.WriteLine(account != null ? "found account" : "Account not found");
+            if(account != null)
+            {
+                socket.Emit(ConnectRequestAlias.GO_TO_SELECT_CHARACTER);
+            }
+            else
+            {
+                socket.Emit(ConnectRequestAlias.WRONG_CREDENTIAL);
+            }
         }
     }
 }
