@@ -20,7 +20,6 @@ namespace Callisto.Receiver.AccountReceiver.Connect
 
         internal class Request
         {
-
             public string Email;
             public string Password;
         }

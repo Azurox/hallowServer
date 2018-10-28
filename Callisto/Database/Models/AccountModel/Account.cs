@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using Callisto.Database.Models.CharacterModel;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
@@ -13,5 +14,6 @@ namespace Callisto.Database.Models.AccountModel
         public ObjectId Id { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public List<Character> Characters { get; set; }
     }
 }

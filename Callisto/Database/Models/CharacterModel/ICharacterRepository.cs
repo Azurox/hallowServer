@@ -7,5 +7,9 @@ namespace Callisto.Database.Models.CharacterModel
 {
     public interface ICharacterRepository
     {
+        Task<Character> GetCharacter(string id);
+        Task Create(Character character);
+        Task<bool> Update(Character character);
+        Task<bool> Delete(string id);
     }
 }

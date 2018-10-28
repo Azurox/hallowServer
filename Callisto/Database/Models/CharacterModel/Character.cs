@@ -16,5 +16,6 @@ namespace Callisto.Database.Models.CharacterModel
         public int Level { get; set; }
         public int Xp { get; set; }
         public Position Position { get; set; }
+        public Position MapPosition { get; set; }
     }
 }

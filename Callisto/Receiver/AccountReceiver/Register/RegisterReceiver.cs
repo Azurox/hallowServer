@@ -24,13 +24,14 @@ namespace Callisto.Receiver.AccountReceiver.Register
         public async Task Listen(Socket socket, string data)
         {
             var request = JsonConvert.DeserializeObject<Request>(data);
-            if (await _accountRepository.AccountExist(request.Email))
+            if (!await _accountRepository.AccountExist(request.Email))
             {
                 await _accountRepository.Create(new Account(){ Email = request.Email, Password = request.Password});
+                socket.Emit(RegisterRequestAlias.ACCOUNT_CREATED);
             }
             else
             {
-                Console.WriteLine("account already exist !");
+                socket.Emit(RegisterRequestAlias.EMAIL_ALREADY_TAKEN);
             }
         }
     }
