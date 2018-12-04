@@ -33,11 +33,12 @@ namespace Callisto
 
         public void Emit(Guid guid, string eventName, string data = "")
         {
-            _socketGateway.SendMessage(guid, eventName);
+            _socketGateway.SendMessage(guid, $"42[\"{eventName}\", {data}]");
         }
 
         public void ProcessMessage(Guid guid, string message)
         {
+            Console.Write(message);
             if (message.StartsWith("42"))
             {
                 var eventAndData = message.Substring(3);
