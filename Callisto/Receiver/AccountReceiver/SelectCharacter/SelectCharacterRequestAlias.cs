@@ -9,5 +9,6 @@ namespace Callisto.Receiver.AccountReceiver.SelectCharacter
     {
         private SelectCharacterRequestAlias() { }
         public const string SELECT_CHARACTER = "account/selectCharacter";
+        public const string GO_TO_WORLD = "account/goToWorld";
     }
 }

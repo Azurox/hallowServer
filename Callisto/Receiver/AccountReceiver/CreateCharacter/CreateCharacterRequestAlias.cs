@@ -9,5 +9,6 @@ namespace Callisto.Receiver.AccountReceiver.CreateCharacter
     {
         private CreateCharacterRequestAlias() { }
         public const string NAME_ALREADY_TAKEN = "account/nameAlreadyTaken";
+        public const string GO_TO_WORLD = "account/goToWorld";
     }
 }

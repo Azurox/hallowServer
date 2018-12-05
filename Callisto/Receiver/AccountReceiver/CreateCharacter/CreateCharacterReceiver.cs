@@ -40,7 +40,7 @@ namespace Callisto.Receiver.AccountReceiver.CreateCharacter
                 account.Characters.Add(character.Id);
                 await _accountRepository.Update(account);
                 socket.volatileInformation.characterId = character.Id.ToString();
-
+                socket.Emit(CreateCharacterRequestAlias.GO_TO_WORLD);
             }
             else
             {
