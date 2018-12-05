@@ -13,9 +13,9 @@ namespace Callisto.Database.Models.CharacterModel
         [BsonId]
         public ObjectId Id { get; set; }
         public string Name { get; set; }
-        public int Level { get; set; }
-        public int Xp { get; set; }
-        public Position Position { get; set; }
-        public Position MapPosition { get; set; }
+        public int Level { get; set; } = 1;
+        public int Xp { get; set; } = 0;
+        public Position Position { get; set; } = new Position() { X = 0, Y = 0 };
+        public Position MapPosition { get; set; } = new Position() { X = 0, Y = 0 };
     }
 }

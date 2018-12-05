@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Callisto.Database;
 using Callisto.Database.Models;
 using Callisto.Database.Models.AccountModel;
+using Callisto.Database.Models.CharacterModel;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -36,6 +37,7 @@ namespace Callisto
 
             services.AddTransient<IDatabaseContext, DatabaseContext>();
             services.AddTransient<IAccountRepository, AccountRepository>();
+            services.AddTransient<ICharacterRepository, CharacterRepository>();
 
             Callisto.Instance().ServiceProvider = services.BuildServiceProvider();
             Callisto.Instance().Init();

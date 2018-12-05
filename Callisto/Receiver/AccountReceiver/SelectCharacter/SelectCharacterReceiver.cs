@@ -17,7 +17,7 @@ namespace Callisto.Receiver.AccountReceiver.SelectCharacter
 
         internal class Request
         {
-            public string CharacterName;
+            public string name;
         }
 
         public Task Listen(Socket socket, string data)

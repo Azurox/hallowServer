@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Callisto.Receiver.AccountReceiver.Characters;
 using Callisto.Receiver.AccountReceiver.Connect;
 using Callisto.Receiver.AccountReceiver.CreateCharacter;
 using Callisto.Receiver.AccountReceiver.Register;
@@ -23,6 +24,8 @@ namespace Callisto.Receiver.AccountReceiver
                     return ActivatorUtilities.CreateInstance<RegisterReceiver>(Callisto.Instance().ServiceProvider);
                 case AccountReceiverAlias.CONNECT:
                     return ActivatorUtilities.CreateInstance<ConnectReceiver>(Callisto.Instance().ServiceProvider);
+                case AccountReceiverAlias.CHARACTERS:
+                    return ActivatorUtilities.CreateInstance<CharactersReceiver>(Callisto.Instance().ServiceProvider);
                 case AccountReceiverAlias.CREATE_CHARACTER:
                     return ActivatorUtilities.CreateInstance<CreateCharacterReceiver>(Callisto.Instance().ServiceProvider);
                 case AccountReceiverAlias.SELECT_CHARACTER:

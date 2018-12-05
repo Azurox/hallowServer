@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace Callisto.Receiver.AccountReceiver.SelectCharacter
 {
-    public class SelectCharacterAlias
+    public class SelectCharacterRequestAlias
     {
-        private SelectCharacterAlias() { }
+        private SelectCharacterRequestAlias() { }
     }
 }

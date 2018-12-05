@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Callisto.Database.Models;
 using Callisto.Database.Models.AccountModel;
 using Callisto.Receiver.Common;
+using Callisto.SocketManagement;
 using Newtonsoft.Json;
 
 namespace Callisto.Receiver.AccountReceiver.Connect
@@ -30,6 +31,10 @@ namespace Callisto.Receiver.AccountReceiver.Connect
             var account = await _accountRepository.GetAccount(request.Email, request.Password);
             if(account != null)
             {
+                socket.volatileInformation = new VolatileInformation()
+                {
+                    accountId = account.Id.ToString()
+                };
                 socket.Emit(ConnectRequestAlias.GO_TO_SELECT_CHARACTER);
             }
             else

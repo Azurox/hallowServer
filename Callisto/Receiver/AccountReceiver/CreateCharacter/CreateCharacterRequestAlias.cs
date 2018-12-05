@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace Callisto.Receiver.AccountReceiver.CreateCharacter
 {
-    public class CreateCharacterAlias
+    public class CreateCharacterRequestAlias
     {
-        private CreateCharacterAlias() { }
+        private CreateCharacterRequestAlias() { }
         public const string NAME_ALREADY_TAKEN = "account/nameAlreadyTaken";
     }
 }

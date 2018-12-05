@@ -1,4 +1,5 @@
 ﻿
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System.Threading.Tasks;
 
@@ -14,6 +15,15 @@ namespace Callisto.Database.Models.AccountModel
         public Task<Account> GetAccount(string email, string password)
         {
             FilterDefinition<Account> filter = Builders<Account>.Filter.Eq(m => m.Email, email) & Builders<Account>.Filter.Eq(m => m.Password, password);
+            return _context
+                    .Accounts
+                    .Find(filter)
+                    .FirstOrDefaultAsync();
+        }
+
+        public Task<Account> GetAccount(string id)
+        {
+            FilterDefinition<Account> filter = Builders<Account>.Filter.Eq(m => m.Id, new ObjectId(id));
             return _context
                     .Accounts
                     .Find(filter)

@@ -24,10 +24,29 @@ namespace Callisto.Database.Models.CharacterModel
                     .FirstOrDefaultAsync();
         }
 
+        public Task<Character> GetCharacter(ObjectId id)
+        {
+            FilterDefinition<Character> filter = Builders<Character>.Filter.Eq(c => c.Id, id);
+            return _context
+                    .Characters
+                    .Find(filter)
+                    .FirstOrDefaultAsync();
+        }
+
         public async Task Create(Character character)
         {
             await _context.Characters.InsertOneAsync(character);
         }
+
+        public async Task<bool> CharacterExist(string name)
+        {
+            FilterDefinition<Character> filter = Builders<Character>.Filter.Eq(m => m.Name, name);
+            return await _context
+                .Characters
+                .Find(filter)
+                .FirstOrDefaultAsync() != null;
+        }
+
         public async Task<bool> Update(Character character)
         {
             ReplaceOneResult updateResult =
