@@ -38,7 +38,7 @@ namespace Callisto
 
         public void ProcessMessage(Guid guid, string message)
         {
-            Console.Write(message);
+            Console.WriteLine(message);
             if (message.StartsWith("42"))
             {
                 var eventAndData = message.Substring(3);

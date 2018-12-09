@@ -1,6 +1,7 @@
 ﻿using Callisto.Database.Models;
 using Callisto.Database.Models.AccountModel;
 using Callisto.Database.Models.CharacterModel;
+using Callisto.Database.Models.MapModel;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using System;
@@ -20,5 +21,7 @@ namespace Callisto.Database
 
         public IMongoCollection<Account> Accounts => _db.GetCollection<Account>("Account");
         public IMongoCollection<Character> Characters => _db.GetCollection<Character>("Character");
+        public IMongoCollection<Map> Maps => _db.GetCollection<Map>("Map");
+
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Callisto.Receiver.Common;
 using Callisto.Receiver.MapReceiver.LoadMap;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Callisto.Receiver.MapReceiver
 {
@@ -16,7 +17,7 @@ namespace Callisto.Receiver.MapReceiver
             switch (eventName)
             {
                 case MapReceiverAlias.LOAD_MAP:
-                    return new LoadMapReceiver();
+                    return ActivatorUtilities.CreateInstance<LoadMapReceiver>(Callisto.Instance().ServiceProvider);
                 default:
                     return null;
             }
