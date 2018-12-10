@@ -10,44 +10,44 @@ namespace Callisto
 {
     public class State
     {
-        private Dictionary<Position, HashSet<Character>> charactersByMap = new Dictionary<Position, HashSet<Character>>();
+        private Dictionary<Position, Dictionary<string, Character>> charactersByMap = new Dictionary<Position, Dictionary<string, Character>>();
 
 
         public HashSet<Character> GetCharactersOnMap(Position position)
         {
-            return charactersByMap.ContainsKey(position) ? charactersByMap[position] : new HashSet<Character>();
+            if (charactersByMap.ContainsKey(position))
+            {
+                return new HashSet<Character>(charactersByMap[position].Values);
+            } else
+            {
+                return new HashSet<Character>();
+            }
         }
 
         public void AddCharacterToMap(Position position, Character character)
         {
             if (charactersByMap.ContainsKey(position))
             {
-                charactersByMap[position].Add(character);
+                charactersByMap[position].Add(character.Id.ToString(), character);
             }
             else
             {
-                charactersByMap[position] = new HashSet<Character>{ character };
+                charactersByMap[position] = new Dictionary<string, Character>() { { character.Id.ToString(), character } };
             }
         }
 
         public void MoveCharacterFromMap(Position oldPosition, Position newPosition, Character character)
         {
-            if (charactersByMap.ContainsKey(oldPosition))
-            {
-                charactersByMap[oldPosition].Remove(character);
-                AddCharacterToMap(newPosition, character);
-            }
-            else
-            {
-                throw new Exception($"Character is not on the map {oldPosition}, unable to move it to {newPosition}");
-            }
+            MoveCharacterFromMap(oldPosition, newPosition, character.Id.ToString());
         }
 
         public void MoveCharacterFromMap(Position oldPosition, Position newPosition, string characterId)
         {
-            if (charactersByMap.ContainsKey(oldPosition))
+            if (charactersByMap.ContainsKey(oldPosition) && charactersByMap[oldPosition].ContainsKey(characterId))
             {
-                // var character = charactersByMap[oldPosition].
+                var character = charactersByMap[oldPosition][characterId];
+                charactersByMap[oldPosition].Remove(characterId);
+                AddCharacterToMap(newPosition, character);
             }
             else
             {
