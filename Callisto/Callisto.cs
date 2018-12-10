@@ -32,9 +32,13 @@ namespace Callisto
 
         public Io Io { get; protected set; }
 
+        public State State { get; protected set; }
+
+        #region Receiver
         private MapReceiver _mapReceiver;
         private AccountReceiver _accountReceiver;
         private MainCharacterReceiver _mainCharacterReceiver;
+        #endregion
 
         public void Init()
         {
@@ -42,6 +46,7 @@ namespace Callisto
             _accountReceiver = new AccountReceiver(SocketGateway.SocketManager);
             _mainCharacterReceiver = new MainCharacterReceiver(SocketGateway.SocketManager);
             Io = new Io(SocketGateway);
+            State = new State();
         }
     }
 }

@@ -9,5 +9,6 @@ namespace Callisto.Receiver.MapReceiver.LoadMap
     {
         private LoadMapRequestAlias() { }
         public const string LOAD_MAP = "map/loadMap";
+        public const string SPAWN_CHARACTER = "map/spawnCharacter";
     }
 }

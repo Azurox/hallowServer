@@ -29,5 +29,24 @@ namespace Callisto
             Callisto.Instance().Io.Emit(Guid, eventName, request);
         }
 
+        public void Join(string roomName)
+        {
+            Callisto.Instance().Io.Join(roomName, Guid);
+        }
+
+        public void Leave(string roomName)
+        {
+            Callisto.Instance().Io.Leave(roomName, Guid);
+        }
+
+        public void EmitTo(string roomName, string eventName, IRequest request)
+        {
+            Callisto.Instance().Io.Emit(roomName, eventName, request);
+        }
+
+        public void Broadcast(string roomName, string eventName, IRequest request)
+        {
+            Callisto.Instance().Io.Broadcast(roomName, Guid, eventName, request);
+        }
     }
 }

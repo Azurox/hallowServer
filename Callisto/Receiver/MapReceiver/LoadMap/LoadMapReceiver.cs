@@ -32,7 +32,14 @@ namespace Callisto.Receiver.MapReceiver.LoadMap
                     mapName = map.Name,
                     position = map.Position
                 });
-            } else
+                socket.Join(map.Name);
+                socket.Broadcast(map.Name, LoadMapRequestAlias.SPAWN_CHARACTER, new SpawnCharacter()
+                {
+                    character = character
+                });
+
+            }
+            else
             {
                 await _mapRepository.CreateAsync(new Map()
                 {

@@ -54,5 +54,20 @@ namespace Callisto.SocketManagement
             }
         }
 
+        public void Broadcast(string roomName, Guid selfGuid, string eventName, IRequest request)
+        {
+            if (_rooms.ContainsKey(roomName))
+            {
+                var requestJson = JsonConvert.SerializeObject(request);
+                foreach (var guid in _rooms[roomName])
+                {
+                    if (!guid.Equals(selfGuid))
+                    {
+                        _socketGateway.SocketManager.Emit(guid, eventName, requestJson);
+                    }
+                }
+            }
+        }
+
     }
 }
