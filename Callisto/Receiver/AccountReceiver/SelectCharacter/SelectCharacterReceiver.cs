@@ -41,6 +41,7 @@ namespace Callisto.Receiver.AccountReceiver.SelectCharacter
             if (selectedChar != null)
             {
                 socket.volatileInformation.characterId = selectedChar.Id.ToString();
+                Callisto.Instance().State.AddCharacterToMap(selectedChar.MapPosition, selectedChar);
                 socket.Emit(SelectCharacterRequestAlias.GO_TO_WORLD);
             }
 

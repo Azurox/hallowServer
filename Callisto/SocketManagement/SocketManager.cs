@@ -7,7 +7,7 @@ namespace Callisto
 {
     public class SocketManager
     {
-        private readonly Dictionary<string, List<Func<Socket, string, Task>>>  _registeredActions = new Dictionary<string, List<Func<Socket, string, Task>>>();
+        private readonly Dictionary<string, List<Func<Socket, string, Task>>> _registeredActions = new Dictionary<string, List<Func<Socket, string, Task>>>();
 
         private readonly ConcurrentDictionary<Guid, Socket> _sockets = new ConcurrentDictionary<Guid, Socket>();
         private readonly SocketGateway _socketGateway;
@@ -36,7 +36,7 @@ namespace Callisto
             _socketGateway.SendMessage(guid, $"42[\"{eventName}\", {data}]");
         }
 
-        public void ProcessMessage(Guid guid, string message)
+        public async void ProcessMessage(Guid guid, string message)
         {
             Console.WriteLine(message);
             if (message.StartsWith("42"))
@@ -47,11 +47,20 @@ namespace Callisto
                 var data = eventAndData.Remove(0, eventName.Length + 3);
                 if (_registeredActions.ContainsKey(eventName))
                 {
-                    if(_sockets.TryGetValue(guid, out var socket))
+                    if (_sockets.TryGetValue(guid, out var socket))
                     {
                         foreach (var action in _registeredActions[eventName])
                         {
-                            action.Invoke(socket, data);       
+                            try
+                            {
+                                await action.Invoke(socket, data);
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.BackgroundColor = ConsoleColor.Red;
+                                Console.WriteLine(ex);
+                                Console.ResetColor();
+                            }
                         }
                     }
                 }
