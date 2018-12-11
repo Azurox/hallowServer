@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Callisto.Receiver.AccountReceiver;
 using Callisto.Receiver.CharacterReceiver;
+using Callisto.Receiver.DisconnectReceiver;
 using Callisto.Receiver.MainCharacterReceiver;
 using Callisto.Receiver.MapReceiver;
 using Callisto.SocketManagement;
@@ -40,6 +41,7 @@ namespace Callisto
         private AccountReceiver _accountReceiver;
         private MainCharacterReceiver _mainCharacterReceiver;
         private CharacterReceiver _characterReceiver;
+        private DisconnectReceiver _disconnectReceiver;
         #endregion
 
         public void Init()
@@ -48,6 +50,7 @@ namespace Callisto
             _accountReceiver = new AccountReceiver(SocketGateway.SocketManager);
             _mainCharacterReceiver = new MainCharacterReceiver(SocketGateway.SocketManager);
             _characterReceiver = new CharacterReceiver(SocketGateway.SocketManager);
+            _disconnectReceiver = new DisconnectReceiver(SocketGateway.SocketManager);
             Io = new Io(SocketGateway);
             State = new State();
         }

@@ -30,21 +30,22 @@ namespace Callisto
             var buffer = new byte[1024 * 4];
             try
             {
-            var result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-            while (!result.CloseStatus.HasValue)
-            {
-                ProcessMessage(socketGuid, buffer, result);
+                var result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
+                while (!result.CloseStatus.HasValue)
+                {
+                    ProcessMessage(socketGuid, buffer, result);
 
-                buffer = new byte[1024 * 4]; // reset the buffer
-                result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-            }
+                    buffer = new byte[1024 * 4]; // reset the buffer
+                    result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
+                }
 
-            await webSocket.CloseAsync(result.CloseStatus.Value, result.CloseStatusDescription,
-                CancellationToken.None);
+                await webSocket.CloseAsync(result.CloseStatus.Value, result.CloseStatusDescription, CancellationToken.None);
+                SocketDisconnected(socketGuid);
+
             }
             catch (WebSocketException ex)
             {
-                Console.WriteLine($"Looks like {socketGuid} disconnected ! 2");
+                SocketDisconnected(socketGuid);
             }
 
         }
@@ -59,9 +60,24 @@ namespace Callisto
         {
             if (_webSockets.TryGetValue(guid, out var webSocket))
             {
-                await webSocket.SendAsync(
+                try
+                {
+                    await webSocket.SendAsync(
                     new ArraySegment<byte>(Encoding.UTF8.GetBytes(message), 0, message.Length),
                     WebSocketMessageType.Text, true, CancellationToken.None);
+                }
+                catch (WebSocketException ex)
+                {
+                    SocketDisconnected(guid);
+                }
+            }
+        }
+
+        private void SocketDisconnected(Guid guid)
+        {
+            if (_webSockets.TryRemove(guid, out var webSocket))
+            {
+                SocketManager.DisconnectSocket(guid);
             }
         }
     }

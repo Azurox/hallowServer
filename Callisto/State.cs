@@ -54,5 +54,17 @@ namespace Callisto
                 throw new Exception($"Character is not on the map {oldPosition}, unable to move it to {newPosition}");
             }
         }
+
+        public void RemoveCharacterFromMap(Position position, string characterId)
+        {
+            if (charactersByMap.ContainsKey(position) && charactersByMap[position].ContainsKey(characterId))
+            {
+                charactersByMap[position].Remove(characterId);
+            }
+            else
+            {
+                throw new Exception($"Character is not on the map {position}, unable to move remove it");
+            }
+        }
     }
 }

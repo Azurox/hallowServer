@@ -8,7 +8,7 @@ namespace Callisto
     public class SocketManager
     {
         private readonly Dictionary<string, List<Func<Socket, string, Task>>> _registeredActions = new Dictionary<string, List<Func<Socket, string, Task>>>();
-
+        private Func<Socket, string, Task> OnDisconnectHandler;
         private readonly ConcurrentDictionary<Guid, Socket> _sockets = new ConcurrentDictionary<Guid, Socket>();
         private readonly SocketGateway _socketGateway;
 
@@ -72,6 +72,19 @@ namespace Callisto
             else
             {
                 Console.WriteLine("Message => " + message + " isn't allowed yet !");
+            }
+        }
+
+        internal void SetDisconnectHandler(Func<Socket, string, Task> listener)
+        {
+            OnDisconnectHandler = listener;
+        }
+
+        public void DisconnectSocket(Guid guid)
+        {
+            if (_sockets.TryRemove(guid, out var socket))
+            {
+                OnDisconnectHandler.Invoke(socket, null);
             }
         }
     }
