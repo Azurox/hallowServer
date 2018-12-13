@@ -25,6 +25,7 @@ namespace Callisto.Receiver.DisconnectReceiver.Disconnect
             {
                 var character = await _characterRepository.GetCharacter(socket.volatileInformation.characterId);
                 Callisto.Instance().State.RemoveCharacterFromMap(character.MapPosition, socket.volatileInformation.characterId);
+                socket.LeaveAll();
             }
         }
     }
