@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Callisto.Database.Models.CharacterModel;
 using Callisto.Database.Models.Common;
 using Callisto.Database.Models.MapModel;
+using Callisto.Receiver.CharacterReceiver.SpawnCharacter;
 using Callisto.Receiver.Common;
 
 namespace Callisto.Receiver.MapReceiver.LoadMap
@@ -33,7 +34,7 @@ namespace Callisto.Receiver.MapReceiver.LoadMap
                     position = map.Position
                 });
                 socket.Join(map.Name);
-                socket.Broadcast(map.Name, LoadMapRequestAlias.SPAWN_CHARACTER, new SpawnCharacter()
+                socket.Broadcast(map.Name, SpawnCharacterAlias.SPAWN_CHARACTER, new SpawnCharacterRequest()
                 {
                     character = character
                 });
