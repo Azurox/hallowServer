@@ -17,7 +17,7 @@ namespace Callisto.Receiver.MainCharacterReceiver.Information
         }
 
 
-        public async Task Listen(Socket socket, string data)
+        public async Task Listen(Socket socket, string _)
         {
             var character = await _characterRepository.GetCharacter(socket.volatileInformation.characterId);
             socket.Emit(InformationRequestAlias.INFORMATION, new InformationRequest()
