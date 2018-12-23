@@ -42,7 +42,8 @@ namespace Callisto.Receiver.MainCharacterReceiver.moveTo
                 path = request.path
             });
 
-
+            character.Position = request.path[request.path.Count - 1];
+            await _characterRepository.Update(character); // TODO : Save the path and decrement every time the caller add a step.
         }
     }
 }
